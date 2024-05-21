@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class Player {
-    private final double MOVE_AMT = 1.2;
+    private final double MOVE_AMT = .5;
     private BufferedImage right;
     private BufferedImage left;
     private boolean facingRight;
@@ -71,7 +71,7 @@ public class Player {
     }
 
     public void moveDown() {
-        if (yCoord + MOVE_AMT <= 435) {
+        if (yCoord + MOVE_AMT <= 500) {
             yCoord += MOVE_AMT;
         }
     }

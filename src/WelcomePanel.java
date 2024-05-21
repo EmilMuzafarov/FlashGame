@@ -13,12 +13,12 @@ public class WelcomePanel extends JPanel implements ActionListener {
     private JButton submitButton;
     private JButton clearButton;
     private JFrame enclosingFrame;
-    private BufferedImage goomba;
+    private BufferedImage lightning;
 
     public WelcomePanel(JFrame frame) {
         enclosingFrame = frame;
         try {
-            goomba = ImageIO.read(new File("src/goomba.png"));
+            lightning = ImageIO.read(new File("src/lightning.png"));
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -38,7 +38,7 @@ public class WelcomePanel extends JPanel implements ActionListener {
         g.setFont(new Font("Arial", Font.BOLD, 16));
         g.setColor(Color.RED);
         g.drawString("Please enter your name:", 50, 30);
-        g.drawImage(goomba, 200, 50, null);
+        g.drawImage(lightning, 200, 50, null);
         textField.setLocation(50, 50);
         submitButton.setLocation(50, 100);
         clearButton.setLocation(150, 100);

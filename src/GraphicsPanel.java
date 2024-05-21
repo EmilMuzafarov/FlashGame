@@ -20,6 +20,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     public GraphicsPanel(String name) {
         try {
             background = ImageIO.read(new File("src/background.png"));
+            //background = (BufferedImage) background.getScaledInstance(1120, 725, Image.SCALE_DEFAULT);//
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
