@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 public class GraphicsPanel extends JPanel implements KeyListener, MouseListener, ActionListener {
     private BufferedImage background;
     private Player player;
@@ -14,6 +15,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     private ArrayList<Coin> coins;
     private Timer timer;
     private int time;
+
 
     public GraphicsPanel(String name) {
         try {
@@ -33,12 +35,16 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         requestFocusInWindow(); // see comment above
     }
 
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);  // just do this
         g.drawImage(background, 0, 0, null);  // the order that things get "painted" matter; we put background down first
         g.drawImage(player.getPlayerImage(), player.getxCoord(), player.getyCoord(), null);
-
+        Color m = new Color(24, 244, 230);
+        g.setColor(m);
+        g.fillRect(800, 20, 180, 45);
+        g.setColor(Color.orange);
         // this loop does two things:  it draws each Coin that gets placed with mouse clicks,
         // and it also checks if the player has "intersected" (collided with) the Coin, and if so,
         // the score goes up and the Coin is removed from the arraylist
@@ -52,10 +58,12 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             }
         }
 
+
         // draw score
         g.setFont(new Font("Courier New", Font.BOLD, 24));
         g.drawString(player.getName() + "'s Score: " + player.getScore(), 20, 40);
         g.drawString("Time: " + time, 20, 70);
+
 
         // player moves left (A)
         if (pressedKeys[65]) {
@@ -63,16 +71,19 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             player.moveLeft();
         }
 
+
         // player moves right (D)
         if (pressedKeys[68]) {
             player.faceRight();
             player.moveRight();
         }
 
+
         // player moves up (W)
         if (pressedKeys[87]) {
             player.moveUp();
         }
+
 
         // player moves down (S)
         if (pressedKeys[83]) {
@@ -80,8 +91,10 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         }
     }
 
+
     // ----- KeyListener interface methods -----
     public void keyTyped(KeyEvent e) { } // unimplemented
+
 
     public void keyPressed(KeyEvent e) {
         // see this for all keycodes: https://stackoverflow.com/questions/15313469/java-keyboard-keycodes-list
@@ -90,33 +103,41 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         pressedKeys[key] = true;
     }
 
+
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
         pressedKeys[key] = false;
     }
 
+
     // ----- MouseListener interface methods -----
     public void mouseClicked(MouseEvent e) { }  // unimplemented; if you move your mouse while clicking,
     // this method isn't called, so mouseReleased is best
 
+
     public void mousePressed(MouseEvent e) { } // unimplemented
 
+
     public void mouseReleased(MouseEvent e) {
-        if (e.getButton() == MouseEvent.BUTTON1) {  // left mouse click
-            Point mouseClickLocation = e.getPoint();
-            Coin coin = new Coin(mouseClickLocation.x, mouseClickLocation.y);
-            coins.add(coin);
-        } else {
-            Point mouseClickLocation = e.getPoint();
-            if (player.playerRect().contains(mouseClickLocation)) {
-                player.turn();
+        if (e.getPoint().getX()>800 && )
+            if (e.getButton() == MouseEvent.BUTTON1) {  // left mouse click
+                Point mouseClickLocation = e.getPoint();
+                Coin coin = new Coin(mouseClickLocation.x, mouseClickLocation.y);
+                coins.add(coin);
+            } else {
+                Point mouseClickLocation = e.getPoint();
+                if (player.playerRect().contains(mouseClickLocation)) {
+                    player.turn();
+                }
             }
-        }
     }
+
 
     public void mouseEntered(MouseEvent e) { } // unimplemented
 
+
     public void mouseExited(MouseEvent e) { } // unimplemented
+
 
     // ACTIONLISTENER INTERFACE METHODS: used for buttons AND timers!
     public void actionPerformed(ActionEvent e) {
@@ -125,3 +146,5 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         }
     }
 }
+
+
