@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class Player {
+public class Enemy {
     private final double MOVE_AMT = 4;
     private BufferedImage right;
     private BufferedImage left;
@@ -14,10 +14,10 @@ public class Player {
     private int score;
     private String name;
 
-    public Player(String leftImg, String rightImg, String name) {
+    public Enemy(String leftImg, String rightImg, String name) {
         this.name = name;
         facingRight = true;
-        xCoord = 50; // starting position is (50, 435), right on top of ground
+        xCoord = 1000; // starting position is (50, 435), right on top of ground
         yCoord = 435;
         score = 0;
         try {

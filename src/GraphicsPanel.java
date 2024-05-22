@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class GraphicsPanel extends JPanel implements KeyListener, MouseListener, ActionListener {
     private BufferedImage background;
     private Player player;
+    private Enemy enemy;
     private boolean[] pressedKeys;
     private ArrayList<Coin> coins;
     private Timer timer;
@@ -25,6 +26,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             System.out.println(e.getMessage());
         }
         player = new Player("src/marioleft.png", "src/marioright.png", name);
+        enemy = new Enemy("src/enemyleft.png", "src/enemyright.png", name);
         coins = new ArrayList<>();
         pressedKeys = new boolean[128];
         time = 0;
@@ -42,6 +44,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         super.paintComponent(g);  // just do this
         g.drawImage(background, 0, 0, null);  // the order that things get "painted" matter; we put background down first
         g.drawImage(player.getPlayerImage(), player.getxCoord(), player.getyCoord(), null);
+        g.drawImage(enemy.getPlayerImage(), enemy.getxCoord(), enemy.getyCoord(), null);
         Color m = new Color(24, 244, 230);
         g.setColor(m);
         g.fillRect(800, 20, 180, 45);
