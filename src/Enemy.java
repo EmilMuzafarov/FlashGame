@@ -16,9 +16,9 @@ public class Enemy {
 
     public Enemy(String leftImg, String rightImg, String name) {
         this.name = name;
-        facingRight = true;
-        xCoord = 1000; // starting position is (50, 435), right on top of ground
-        yCoord = 435;
+        facingRight = false;
+        xCoord = 800; // starting position is (50, 435), right on top of ground
+        yCoord = 235;
         score = 0;
         try {
             left = ImageIO.read(new File(leftImg));
@@ -82,10 +82,6 @@ public class Enemy {
         } else {
             faceRight();
         }
-    }
-
-    public void collectCoin() {
-        score++;
     }
 
     public BufferedImage getPlayerImage() {
