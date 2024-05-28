@@ -11,7 +11,7 @@ public class Player {
     private boolean facingRight;
     private double xCoord;
     private double yCoord;
-    private int score;
+    private int health;
     private String name;
 
     public Player(String leftImg, String rightImg, String name) {
@@ -19,7 +19,7 @@ public class Player {
         facingRight = true;
         xCoord = 50; // starting position is (50, 435), right on top of ground
         yCoord = 435;
-        score = 0;
+        health = 100;
         try {
             left = ImageIO.read(new File(leftImg));
             right = ImageIO.read(new File(rightImg));
@@ -36,8 +36,8 @@ public class Player {
         return (int) yCoord;
     }
 
-    public int getScore() {
-        return score;
+    public int getHealth() {
+        return health;
     }
 
     public String getName() {
@@ -84,8 +84,8 @@ public class Player {
         }
     }
 
-    public void collectCoin() {
-        score++;
+    public void takeDmg() {
+        health-=25;
     }
 
     public BufferedImage getPlayerImage() {

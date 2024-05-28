@@ -11,7 +11,7 @@ public class Enemy {
     private boolean facingRight;
     private double xCoord;
     private double yCoord;
-    private int score;
+    private int health;
     private String name;
 
     public Enemy(String leftImg, String rightImg, String name) {
@@ -19,7 +19,7 @@ public class Enemy {
         facingRight = false;
         xCoord = 800; // starting position is (50, 435), right on top of ground
         yCoord = 235;
-        score = 0;
+        health = 100;
         try {
             left = ImageIO.read(new File(leftImg));
             right = ImageIO.read(new File(rightImg));
@@ -36,8 +36,8 @@ public class Enemy {
         return (int) yCoord;
     }
 
-    public int getScore() {
-        return score;
+    public int getHealth() {
+        return health;
     }
 
     public String getName() {

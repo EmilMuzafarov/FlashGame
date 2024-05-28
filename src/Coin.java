@@ -13,7 +13,7 @@ public class Coin {
         xCoord = x;
         yCoord = y;
         try {
-            image = ImageIO.read(new File("src/coin.png"));
+            image = ImageIO.read(new File("src/expl.png"));
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

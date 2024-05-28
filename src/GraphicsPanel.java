@@ -56,7 +56,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             Coin coin = coins.get(i);
             g.drawImage(coin.getImage(), coin.getxCoord(), coin.getyCoord(), null); // draw Coin
             if (player.playerRect().intersects(coin.coinRect())) { // check for collision
-                player.collectCoin();
+                player.takeDmg();
                 coins.remove(i);
                 i--;
             }
@@ -65,7 +65,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
 
         // draw score
         g.setFont(new Font("Courier New", Font.BOLD, 24));
-        g.drawString(player.getName() + "'s Score: " + player.getScore(), 20, 40);
+        g.drawString(player.getName() + "'s Health: " + player.getHealth(), 20, 40);
         g.drawString("Time: " + time, 20, 70);
 
         // player moves left (A)
@@ -88,6 +88,9 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         // player moves down (S)
         if (pressedKeys[83]) {
             player.moveDown();
+        }
+        if (pressedKeys[70]) {
+            g.drawImage(coin.getImage(), coin.getxCoord(), coin.getyCoord(), null);
         }
     }
 
