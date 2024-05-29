@@ -35,9 +35,9 @@ public class WelcomePanel extends JPanel implements ActionListener {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setFont(new Font("Arial", Font.BOLD, 16));
+        g.setFont(new Font("Roboto", Font.BOLD, 16));
         g.setColor(Color.RED);
-        g.drawString("Please enter your name:", 50, 30);
+        g.drawString("Please enter a name:", 50, 30);
         g.drawImage(lightning, 200, 50, null);
         textField.setLocation(50, 50);
         submitButton.setLocation(50, 100);
@@ -50,7 +50,7 @@ public class WelcomePanel extends JPanel implements ActionListener {
             JButton button = (JButton) e.getSource();
             if (button == submitButton) {
                 String playerName = textField.getText();
-                MainFrame f = new MainFrame(playerName);
+                MainFrame m = new MainFrame(playerName);
                 enclosingFrame.setVisible(false);
             } else {
                 textField.setText("");

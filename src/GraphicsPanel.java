@@ -25,11 +25,11 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        player = new Player("src/marioleft.png", "src/marioright.png", name);
-        enemy = new Enemy("src/enemyleft.png", "src/enemyright.png", name);
+        player = new Player("src/marioleft.png", "src/marioright.png", "Flash");
+        enemy = new Enemy("src/enemyleft.png", "src/enemyright.png", "Reverse Flash");
         coins = new ArrayList<>();
         pressedKeys = new boolean[128];
-        time = 0;
+        time = 120;
         timer = new Timer(1000, this); // this Timer will call the actionPerformed interface method every 1000ms = 1 second
         timer.start();
         addKeyListener(this);
@@ -38,16 +38,19 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         requestFocusInWindow(); // see comment above
     }
 
-
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);  // just do this
         g.drawImage(background, 0, 0, null);  // the order that things get "painted" matter; we put background down first
         g.drawImage(player.getPlayerImage(), player.getxCoord(), player.getyCoord(), null);
         g.drawImage(enemy.getPlayerImage(), enemy.getxCoord(), enemy.getyCoord(), null);
-        Color m = new Color(24, 244, 230);
+        Color m = new Color(51, 51, 255);
         g.setColor(m);
-        g.fillRect(800, 20, 180, 45);
+        g.fillRect(860, 40, 180, 45);
+        g.setColor(Color.red);
+        g.setFont(new Font("Concert One", Font.BOLD, 24));
+        g.drawString("RESTART", 890, 74);
+        //if (player.playerRect().intersects(890, 74) {}
         g.setColor(Color.orange);
         // this loop does two things:  it draws each Coin that gets placed with mouse clicks,
         // and it also checks if the player has "intersected" (collided with) the Coin, and if so,
@@ -62,10 +65,10 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             }
         }
 
-
         // draw score
         g.setFont(new Font("Courier New", Font.BOLD, 24));
         g.drawString(player.getName() + "'s Health: " + player.getHealth(), 20, 40);
+        g.drawString(enemy.getName() + "'s Health: " + enemy.getHealth(), 450, 40);
         g.drawString("Time: " + time, 20, 70);
 
         // player moves left (A)
@@ -90,7 +93,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             player.moveDown();
         }
         if (pressedKeys[70]) {
-            g.drawImage(coin.getImage(), coin.getxCoord(), coin.getyCoord(), null);
+
         }
     }
 
@@ -132,10 +135,13 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
 
     public void mouseExited(MouseEvent e) { } // unimplemented
 
+    public int getTime() {
+        return time;
+    }
     // ACTIONLISTENER INTERFACE METHODS: used for buttons AND timers!
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() instanceof Timer) {
-            time++;
+            time--;
         }
     }
 }

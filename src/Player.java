@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class Player {
-    private final double MOVE_AMT = 4;
+    private final double MOVE_AMT = 1;
     private BufferedImage right;
     private BufferedImage left;
     private boolean facingRight;
@@ -18,7 +18,7 @@ public class Player {
         this.name = name;
         facingRight = true;
         xCoord = 50; // starting position is (50, 435), right on top of ground
-        yCoord = 435;
+        yCoord = 270;
         health = 100;
         try {
             left = ImageIO.read(new File(leftImg));
@@ -85,7 +85,7 @@ public class Player {
     }
 
     public void takeDmg() {
-        health-=25;
+        health-=10;
     }
 
     public BufferedImage getPlayerImage() {

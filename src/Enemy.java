@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class Enemy {
-    private final double MOVE_AMT = 4;
+    private final double MOVE_AMT = 3;
     private BufferedImage right;
     private BufferedImage left;
     private boolean facingRight;
@@ -18,7 +18,7 @@ public class Enemy {
         this.name = name;
         facingRight = false;
         xCoord = 800; // starting position is (50, 435), right on top of ground
-        yCoord = 235;
+        yCoord = 270;
         health = 100;
         try {
             left = ImageIO.read(new File(leftImg));
