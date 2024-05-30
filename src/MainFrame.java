@@ -3,7 +3,6 @@ import javax.swing.*;
 public class MainFrame implements Runnable {
 
     private GraphicsPanel panel;
-    private boolean t=true;
     public MainFrame(String name) {
         JFrame frame = new JFrame("The Flash Game");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -23,10 +22,7 @@ public class MainFrame implements Runnable {
     }
 
     public void run() {
-        if (panel.getTime()<0) {
-            t=false;
-        }
-        while (t) {
+        while (true) {
             panel.repaint();  // we don't ever call "paintComponent" directly, but call this to refresh the panel
         }
     }

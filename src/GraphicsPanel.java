@@ -29,7 +29,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         enemy = new Enemy("src/enemyleft.png", "src/enemyright.png", "Reverse Flash");
         coins = new ArrayList<>();
         pressedKeys = new boolean[128];
-        time = 120;
+        time = 5;
         timer = new Timer(1000, this); // this Timer will call the actionPerformed interface method every 1000ms = 1 second
         timer.start();
         addKeyListener(this);
@@ -41,59 +41,75 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);  // just do this
-        g.drawImage(background, 0, 0, null);  // the order that things get "painted" matter; we put background down first
-        g.drawImage(player.getPlayerImage(), player.getxCoord(), player.getyCoord(), null);
-        g.drawImage(enemy.getPlayerImage(), enemy.getxCoord(), enemy.getyCoord(), null);
-        Color m = new Color(51, 51, 255);
-        g.setColor(m);
-        g.fillRect(860, 40, 180, 45);
-        g.setColor(Color.red);
-        g.setFont(new Font("Concert One", Font.BOLD, 24));
-        g.drawString("RESTART", 890, 74);
-        //if (player.playerRect().intersects(890, 74) {}
-        g.setColor(Color.orange);
-        // this loop does two things:  it draws each Coin that gets placed with mouse clicks,
-        // and it also checks if the player has "intersected" (collided with) the Coin, and if so,
-        // the score goes up and the Coin is removed from the arraylist
-        for (int i = 0; i < coins.size(); i++) {
-            Coin coin = coins.get(i);
-            g.drawImage(coin.getImage(), coin.getxCoord(), coin.getyCoord(), null); // draw Coin
-            if (player.playerRect().intersects(coin.coinRect())) { // check for collision
-                player.takeDmg();
-                coins.remove(i);
-                i--;
+        g.drawImage(background, 0, 0, null);// the order that things get "painted" matter; we put background down first
+        if (!endGame().equals("NoEnd")) {
+            g.setFont(new Font("LEXEND", Font.BOLD, 120));
+            if (!endGame().equals("VICTORY")) {
+                g.setColor(Color.red);
+                if (endGame().length()>6) {
+                    g.setColor(Color.DARK_GRAY);
+                    g.drawString(endGame(), 80, 305);
+                } else {
+                    g.drawString(endGame(), 500, 305);
+                }
+            } else {
+                g.setColor(Color.yellow);
+                g.drawString(endGame(), 200, 305);
             }
-        }
+        } else {
+            g.drawImage(player.getPlayerImage(), player.getxCoord(), player.getyCoord(), null);
+            g.drawImage(enemy.getPlayerImage(), enemy.getxCoord(), enemy.getyCoord(), null);
+            Color m = new Color(51, 51, 255);
+            g.setColor(m);
+            g.fillRect(860, 40, 180, 45);
+            g.setColor(Color.red);
+            g.setFont(new Font("Concert One", Font.BOLD, 24));
+            g.drawString("RESTART", 890, 74);
+            //if (player.playerRect().intersects(890, 74) {}
+            g.setColor(Color.orange);
+            // this loop does two things:  it draws each Coin that gets placed with mouse clicks,
+            // and it also checks if the player has "intersected" (collided with) the Coin, and if so,
+            // the score goes up and the Coin is removed from the arraylist
+            for (int i = 0; i < coins.size(); i++) {
+                Coin coin = coins.get(i);
+                g.drawImage(coin.getImage(), coin.getxCoord(), coin.getyCoord(), null); // draw Coin
+                if (player.playerRect().intersects(coin.coinRect())) { // check for collision
+                    player.takeDmg();
+                    coins.remove(i);
+                    i--;
+                }
+            }
 
-        // draw score
-        g.setFont(new Font("Courier New", Font.BOLD, 24));
-        g.drawString(player.getName() + "'s Health: " + player.getHealth(), 20, 40);
-        g.drawString(enemy.getName() + "'s Health: " + enemy.getHealth(), 450, 40);
-        g.drawString("Time: " + time, 20, 70);
+            // draw score
+            g.setFont(new Font("Courier New", Font.BOLD, 24));
+            g.drawString(player.getName() + "'s Health: " + player.getHealth(), 20, 40);
+            g.drawString(enemy.getName() + "'s Health: " + enemy.getHealth(), 450, 40);
+            g.drawString("Time: " + time, 20, 70);
 
-        // player moves left (A)
-        if (pressedKeys[65]) {
-            player.faceLeft();
-            player.moveLeft();
-        }
+            // player moves left (A)
+            if (pressedKeys[65]) {
+                player.faceLeft();
+                player.moveLeft();
+            }
 
-        // player moves right (D)
-        if (pressedKeys[68]) {
-            player.faceRight();
-            player.moveRight();
-        }
+            // player moves right (D)
+            if (pressedKeys[68]) {
+                player.faceRight();
+                player.moveRight();
+            }
 
-        // player moves up (W)
-        if (pressedKeys[87]) {
-            player.moveUp();
-        }
+            // player moves up (W)
+            if (pressedKeys[87]) {
+                player.moveUp();
+            }
 
-        // player moves down (S)
-        if (pressedKeys[83]) {
-            player.moveDown();
-        }
-        if (pressedKeys[70]) {
+            // player moves down (S)
+            if (pressedKeys[83]) {
+                player.moveDown();
+            }
+            if (pressedKeys[70]) {
 
+            }
         }
     }
 
@@ -135,13 +151,25 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
 
     public void mouseExited(MouseEvent e) { } // unimplemented
 
-    public int getTime() {
-        return time;
+    public String endGame() {
+        if (player.getHealth()<0) {
+            return "DEFEAT!";
+        }
+        else if (time==0) {
+            return "LOSS TO TIME!";
+        }
+        else if (enemy.getHealth()<0) {
+            return "VICTORY!";
+        } else {
+            return "NoEnd";
+        }
     }
     // ACTIONLISTENER INTERFACE METHODS: used for buttons AND timers!
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() instanceof Timer) {
-            time--;
+            if (time>0) {
+                time--;
+            }
         }
     }
 }
