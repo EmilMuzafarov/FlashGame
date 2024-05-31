@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class Enemy {
-    private final double MOVE_AMT = 3;
+    private final double MOVE_AMT = 2;
     private BufferedImage right;
     private BufferedImage left;
     private boolean facingRight;
@@ -90,6 +90,9 @@ public class Enemy {
         } else {
             return left;
         }
+    }
+    public void takeDmg() {
+        health-=10;
     }
 
     // we use a "bounding Rectangle" for detecting collision

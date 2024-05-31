@@ -16,6 +16,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     private ArrayList<Coin> coins;
     private Timer timer;
     private int time;
+    private int c=0;
 
 
     public GraphicsPanel(String name) {
@@ -29,7 +30,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         enemy = new Enemy("src/enemyleft.png", "src/enemyright.png", "Reverse Flash");
         coins = new ArrayList<>();
         pressedKeys = new boolean[128];
-        time = 5;
+        time = 180;
         timer = new Timer(1000, this); // this Timer will call the actionPerformed interface method every 1000ms = 1 second
         timer.start();
         addKeyListener(this);
@@ -40,21 +41,23 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
 
     @Override
     public void paintComponent(Graphics g) {
+        c=0;
         super.paintComponent(g);  // just do this
         g.drawImage(background, 0, 0, null);// the order that things get "painted" matter; we put background down first
         if (!endGame().equals("NoEnd")) {
             g.setFont(new Font("LEXEND", Font.BOLD, 120));
-            if (!endGame().equals("VICTORY")) {
+            if (!endGame().equals("VICTORY!")) {
                 g.setColor(Color.red);
-                if (endGame().length()>6) {
+                if (endGame().length()>7) {
                     g.setColor(Color.DARK_GRAY);
                     g.drawString(endGame(), 80, 305);
                 } else {
-                    g.drawString(endGame(), 500, 305);
+                    g.drawString(endGame(), 275, 305);
                 }
             } else {
-                g.setColor(Color.yellow);
-                g.drawString(endGame(), 200, 305);
+                Color o=new Color(250, 175, 0);
+                g.setColor(o);
+                g.drawString(endGame(), 240, 305);
             }
         } else {
             g.drawImage(player.getPlayerImage(), player.getxCoord(), player.getyCoord(), null);
@@ -78,6 +81,12 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
                     coins.remove(i);
                     i--;
                 }
+                if (enemy.playerRect().intersects(coin.coinRect())) {
+                    enemy.takeDmg();
+                    coins.remove(i);
+                    i--;
+                }
+                coin.move();
             }
 
             // draw score
@@ -107,8 +116,10 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             if (pressedKeys[83]) {
                 player.moveDown();
             }
-            if (pressedKeys[70]) {
-
+            if (pressedKeys[70] && c<1) {
+                Coin coin = new Coin(player.getxCoord() + 200, player.getyCoord());
+                coins.add(coin);
+                c++;
             }
         }
     }
@@ -137,8 +148,6 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     public void mouseReleased(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {  // left mouse click
             Point mouseClickLocation = e.getPoint();
-            Coin coin = new Coin(mouseClickLocation.x, mouseClickLocation.y);
-            coins.add(coin);
         } else {
             Point mouseClickLocation = e.getPoint();
             if (player.playerRect().contains(mouseClickLocation)) {
@@ -152,14 +161,14 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     public void mouseExited(MouseEvent e) { } // unimplemented
 
     public String endGame() {
-        if (player.getHealth()<0) {
+        if (player.getHealth()==0) {
             return "DEFEAT!";
+        }
+        else if (enemy.getHealth()==0) {
+            return "VICTORY!";
         }
         else if (time==0) {
             return "LOSS TO TIME!";
-        }
-        else if (enemy.getHealth()<0) {
-            return "VICTORY!";
         } else {
             return "NoEnd";
         }
