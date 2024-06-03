@@ -10,7 +10,7 @@ public class Coin {
     private BufferedImage image;
     private int speed;
 
-    public Coin(int x, int y) {
+    public Coin(int x, int y, int speed) {
         xCoord = x;
         yCoord = y;
         try {
@@ -18,7 +18,7 @@ public class Coin {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        speed=1;
+        this.speed=speed;
     }
 
     public int getxCoord() {

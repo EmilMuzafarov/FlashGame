@@ -19,7 +19,7 @@ public class Player {
         facingRight = true;
         xCoord = 50; // starting position is (50, 435), right on top of ground
         yCoord = 270;
-        health = 10000;
+        health = 100;
         try {
             left = ImageIO.read(new File(leftImg));
             right = ImageIO.read(new File(rightImg));
@@ -42,6 +42,13 @@ public class Player {
 
     public String getName() {
         return name;
+    }
+
+    public boolean isFacingRight() {
+        if (facingRight) {
+            return true;
+        }
+        return false;
     }
 
     public void faceRight() {

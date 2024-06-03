@@ -18,8 +18,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     private int time;
     private int c=0;
 
-
-    public GraphicsPanel(String name) {
+    public GraphicsPanel() {
         try {
             background = ImageIO.read(new File("src/background.png"));
             //background = (BufferedImage) background.getScaledInstance(1120, 725, Image.SCALE_DEFAULT);//
@@ -41,7 +40,6 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
 
     @Override
     public void paintComponent(Graphics g) {
-        c=0;
         super.paintComponent(g);  // just do this
         g.drawImage(background, 0, 0, null);// the order that things get "painted" matter; we put background down first
         if (!endGame().equals("NoEnd")) {
@@ -116,11 +114,6 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             if (pressedKeys[83]) {
                 player.moveDown();
             }
-            if (pressedKeys[70] && c<1) {
-                Coin coin = new Coin(player.getxCoord() + 200, player.getyCoord());
-                coins.add(coin);
-                c++;
-            }
         }
     }
 
@@ -136,6 +129,18 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
 
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
+        if (key==70 && c<20) {
+            int speed=-1;
+            int y = 70;
+            int x = -80;
+            if (player.isFacingRight()) {
+                x = 200;
+                speed=1;
+            }
+            Coin coin = new Coin(player.getxCoord()+x, player.getyCoord()+y, speed);
+            coins.add(coin);
+            c++;
+        }
         pressedKeys[key] = false;
     }
 
