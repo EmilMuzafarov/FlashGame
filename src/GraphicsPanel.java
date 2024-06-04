@@ -25,8 +25,8 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        player = new Player("src/marioleft.png", "src/marioright.png", "Flash");
-        enemy = new Enemy("src/enemyleft.png", "src/enemyright.png", "Reverse Flash");
+        player = new Player("src/marioleft.png", "src/marioright.png", "src/flash.png", "Flash");
+        enemy = new Enemy("src/enemyleft.png", "src/enemyright.png", "src/enemy.png","Reverse Flash");
         coins = new ArrayList<>();
         pressedKeys = new boolean[128];
         time = 180;

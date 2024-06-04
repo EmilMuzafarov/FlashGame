@@ -6,6 +6,7 @@ import java.io.IOException;
 
 public class Enemy {
     private final double MOVE_AMT = 2;
+    private BufferedImage orig;
     private BufferedImage right;
     private BufferedImage left;
     private boolean facingRight;
@@ -13,14 +14,16 @@ public class Enemy {
     private double yCoord;
     private int health;
     private String name;
+    private int s=0;
 
-    public Enemy(String leftImg, String rightImg, String name) {
+    public Enemy(String leftImg, String rightImg, String origImg, String name) {
         this.name = name;
         facingRight = false;
         xCoord = 800; // starting position is (50, 435), right on top of ground
         yCoord = 270;
         health = 100;
         try {
+            orig = ImageIO.read(new File(origImg));
             left = ImageIO.read(new File(leftImg));
             right = ImageIO.read(new File(rightImg));
         } catch (IOException e) {
@@ -85,10 +88,15 @@ public class Enemy {
     }
 
     public BufferedImage getPlayerImage() {
+        s++;
         if (facingRight) {
             return right;
         } else {
-            return left;
+            if (s>1) {
+                return left;
+            } else {
+                return orig;
+            }
         }
     }
     public void takeDmg() {
