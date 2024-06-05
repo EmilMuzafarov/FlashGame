@@ -14,11 +14,11 @@ public class Player {
     private double yCoord;
     private int health;
     private String name;
-    private int s;
+    private boolean start=true;
 
     public Player(String leftImg, String rightImg, String origImg, String name) {
         this.name = name;
-        facingRight = true;
+        facingRight = false;
         xCoord = 50; // starting position is (50, 435), right on top of ground
         yCoord = 270;
         health = 100;
@@ -56,10 +56,12 @@ public class Player {
 
     public void faceRight() {
         facingRight = true;
+        start=false;
     }
 
     public void faceLeft() {
         facingRight = false;
+        start=false;
     }
 
     public void moveRight() {
@@ -99,11 +101,10 @@ public class Player {
     }
 
     public BufferedImage getPlayerImage() {
-        s++;
         if (facingRight) {
             return right;
         } else {
-            if (s>1) {
+            if (!start) {
                 return left;
             } else {
                 return orig;

@@ -23,6 +23,9 @@ public class MainFrame implements Runnable {
 
     public void run() {
         while (true) {
+            if (panel.start) {
+                panel=new GraphicsPanel();
+            }
             panel.repaint();  // we don't ever call "paintComponent" directly, but call this to refresh the panel
         }
     }

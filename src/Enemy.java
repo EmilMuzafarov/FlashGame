@@ -14,7 +14,7 @@ public class Enemy {
     private double yCoord;
     private int health;
     private String name;
-    private int s=0;
+    private boolean start=true;
 
     public Enemy(String leftImg, String rightImg, String origImg, String name) {
         this.name = name;
@@ -49,10 +49,12 @@ public class Enemy {
 
     public void faceRight() {
         facingRight = true;
+        start=false;
     }
 
     public void faceLeft() {
         facingRight = false;
+        start=false;
     }
 
     public void moveRight() {
@@ -88,11 +90,10 @@ public class Enemy {
     }
 
     public BufferedImage getPlayerImage() {
-        s++;
         if (facingRight) {
             return right;
         } else {
-            if (s>1) {
+            if (!start) {
                 return left;
             } else {
                 return orig;
