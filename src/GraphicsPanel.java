@@ -64,11 +64,11 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             g.drawImage(enemy.getPlayerImage(), enemy.getxCoord(), enemy.getyCoord(), null);
             Color m = new Color(51, 51, 255);
             g.setColor(m);
-            g.fillRect(860, 40, 175, 45);
+            g.fillRect(860, 40, 155, 45);
             g.setColor(Color.red);
             g.setFont(new Font("Concert One", Font.BOLD, 25));
             g.drawString("RESTART", 880, 74);
-            restart=new Rectangle(860, 40, 175, 45);
+            restart=new Rectangle(860, 40, 155, 45);
             g.setColor(Color.orange);
             // this loop does two things:  it draws each Coin that gets placed with mouse clicks,
             // and it also checks if the player has "intersected" (collided with) the Coin, and if so,
