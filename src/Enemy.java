@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class Enemy {
-    private final double MOVE_AMT = 2;
+    private final double MOVE_AMT = 1;
     private BufferedImage orig;
     private BufferedImage right;
     private BufferedImage left;

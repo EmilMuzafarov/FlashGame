@@ -42,6 +42,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
 
     @Override
     public void paintComponent(Graphics g) {
+        start=false;
         super.paintComponent(g);  // just do this
         g.drawImage(background, 0, 0, null);// the order that things get "painted" matter; we put background down first
         if (!endGame().equals("NoEnd")) {
@@ -155,6 +156,9 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     public void mouseReleased(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {  // left mouse click
             Point mouseClickLocation = e.getPoint();
+            if (restart.contains(mouseClickLocation)) {
+                start=true;
+            }
         } else {
             Point mouseClickLocation = e.getPoint();
             if (player.playerRect().contains(mouseClickLocation)) {
