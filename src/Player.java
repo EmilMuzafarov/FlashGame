@@ -95,7 +95,6 @@ public class Player {
             faceRight();
         }
     }
-
     public void takeDmg() {
         health-=10;
     }

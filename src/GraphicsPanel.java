@@ -19,6 +19,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     private int c=0;
     private Rectangle restart;
     public boolean start=false;
+    private int j=0;
 
     public GraphicsPanel() {
         try {
@@ -61,6 +62,18 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
                 g.drawString(endGame(), 240, 305);
             }
         } else {
+            if (j>0) {
+                if (j<6) {
+                    player.moveUp();
+                } else {
+                    player.moveDown();
+                }
+                g.drawImage(player.getPlayerImage(), player.getxCoord(), player.getyCoord(), null);
+                j++;
+                if (j>12) {
+                    j=0;
+                }
+            }
             g.drawImage(player.getPlayerImage(), player.getxCoord(), player.getyCoord(), null);
             g.drawImage(enemy.getPlayerImage(), enemy.getxCoord(), enemy.getyCoord(), null);
             Color m = new Color(51, 51, 255);
@@ -110,7 +123,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
 
             // player moves up (W)
             if (pressedKeys[87]) {
-                player.moveUp();
+                j=1;
             }
 
             // player moves down (S)
