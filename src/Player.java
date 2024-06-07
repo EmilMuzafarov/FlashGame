@@ -76,13 +76,18 @@ public class Player {
         }
     }
 
-    public void moveUp() {
+    public void moveDown() {
+        if (yCoord + MOVE_AMT <= 500) {
+            yCoord += MOVE_AMT;
+        }
+    }
+    public void moveUp(int MOVE_AMT) {
         if (yCoord - MOVE_AMT >= 0) {
             yCoord -= MOVE_AMT;
         }
     }
 
-    public void moveDown() {
+    public void moveDown(int MOVE_AMT) {
         if (yCoord + MOVE_AMT <= 500) {
             yCoord += MOVE_AMT;
         }

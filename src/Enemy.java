@@ -68,6 +68,17 @@ public class Enemy {
             xCoord -= MOVE_AMT;
         }
     }
+    public void moveLeft(int MOVE_AMT) {
+        if (xCoord - MOVE_AMT >= 0) {
+            xCoord -= MOVE_AMT;
+        }
+    }
+
+    public void moveRight(int MOVE_AMT) {
+        if (xCoord + MOVE_AMT <= 500) {
+            xCoord += MOVE_AMT;
+        }
+    }
 
     public void moveUp() {
         if (yCoord - MOVE_AMT >= 0) {
