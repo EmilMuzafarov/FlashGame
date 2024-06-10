@@ -21,6 +21,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     public boolean start=false;
     public boolean jump=false;
     private int j=0;
+    private int e=-1;
 
     public GraphicsPanel() {
         try {
@@ -65,21 +66,17 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         } else {
             g.drawImage(player.getPlayerImage(), player.getxCoord(), player.getyCoord(), null);
             g.drawImage(enemy.getPlayerImage(), enemy.getxCoord(), enemy.getyCoord(), null);
-            if (jump && j<=1) {
-                int t=100;
-                if (j==0) {
-                    t=time;
+            if (jump) {
+                if (j<0) {
+                    player.moveDown(5);
+                    j++;
                 }
-                if (j==1) {
-                     if (time<t) {
-                         player.moveDown(2);
-                     }
-                } else {
-                    player.moveUp(2);
+                if (j>0) {
+                    player.moveUp(5);
+                    j--;
                 }
-                j++;
             }
-            if (time<170) {
+            if (time<10) {
                 if (player.playerRect().intersects(enemy.playerRect()) ) {
                     if (player.getyCoord()<=enemy.getyCoord()-220) {
                         enemy.takeDmg();
@@ -90,11 +87,13 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
                         player.moveLeft();
                     }
                 }
-                if (enemy.getxCoord()>player.getxCoord()) {
+                if (e<0) {
                     enemy.moveLeft();
-                }
-                else if (enemy.getxCoord()<player.getxCoord()) {
+                } else {
                     enemy.moveRight();
+                }
+                if (enemy.getxCoord()==500) {
+                    e=0;
                 }
             }
             Color m = new Color(51, 51, 255);
@@ -144,7 +143,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
 
             // player moves up (W)
             if (pressedKeys[87]) {
-                jump=true;
+
             }
 
             // player moves down (S)
@@ -179,6 +178,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             c++;
         }
         if (key==87) {
+            jump=true;
             j=0;
         }
         pressedKeys[key] = false;
