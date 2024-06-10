@@ -19,6 +19,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     private int c=0;
     private Rectangle restart;
     public boolean start=false;
+    public boolean jump=false;
     private int j=0;
 
     public GraphicsPanel() {
@@ -62,15 +63,40 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
                 g.drawString(endGame(), 240, 305);
             }
         } else {
-            if (j%2==0) {
-                enemy.moveRight(1);
-            } else {
-                enemy.moveLeft(1);
-            }
-            j++;
-            g.drawImage(player.getPlayerImage(), player.getxCoord(), player.getyCoord(), null);
             g.drawImage(player.getPlayerImage(), player.getxCoord(), player.getyCoord(), null);
             g.drawImage(enemy.getPlayerImage(), enemy.getxCoord(), enemy.getyCoord(), null);
+            if (jump && j<=1) {
+                int t=100;
+                if (j==0) {
+                    t=time;
+                }
+                if (j==1) {
+                     if (time<t) {
+                         player.moveDown(2);
+                     }
+                } else {
+                    player.moveUp(2);
+                }
+                j++;
+            }
+            if (time<170) {
+                if (player.playerRect().intersects(enemy.playerRect()) ) {
+                    if (player.getyCoord()<=enemy.getyCoord()-220) {
+                        enemy.takeDmg();
+                        enemy.moveRight();
+                    } else {
+                        enemy.takeDmg();
+                        player.takeDmg();
+                        player.moveLeft();
+                    }
+                }
+                if (enemy.getxCoord()>player.getxCoord()) {
+                    enemy.moveLeft();
+                }
+                else if (enemy.getxCoord()<player.getxCoord()) {
+                    enemy.moveRight();
+                }
+            }
             Color m = new Color(51, 51, 255);
             g.setColor(m);
             g.fillRect(860, 40, 155, 45);
@@ -118,6 +144,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
 
             // player moves up (W)
             if (pressedKeys[87]) {
+                jump=true;
             }
 
             // player moves down (S)
@@ -150,6 +177,9 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             Coin coin = new Coin(player.getxCoord()+x, player.getyCoord()+y, speed);
             coins.add(coin);
             c++;
+        }
+        if (key==87) {
+            j=0;
         }
         pressedKeys[key] = false;
     }
