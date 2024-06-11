@@ -1,4 +1,5 @@
 import javax.swing.*;
+
 public class MainFrame implements Runnable {
     private GraphicsPanel panel;
     public MainFrame() {

@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
+import java.util.concurrent.TimeUnit;
 
 public class GraphicsPanel extends JPanel implements KeyListener, MouseListener, ActionListener {
     private BufferedImage background;
@@ -19,14 +19,11 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
     private int c=0;
     private Rectangle restart;
     public boolean start=false;
-    public boolean jump=false;
-    private int j=0;
     private int e=-1;
 
     public GraphicsPanel() {
         try {
             background = ImageIO.read(new File("src/background.png"));
-            //background = (BufferedImage) background.getScaledInstance(1120, 725, Image.SCALE_DEFAULT);//
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -66,17 +63,7 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
         } else {
             g.drawImage(player.getPlayerImage(), player.getxCoord(), player.getyCoord(), null);
             g.drawImage(enemy.getPlayerImage(), enemy.getxCoord(), enemy.getyCoord(), null);
-            if (jump) {
-                if (j<0) {
-                    player.moveDown(5);
-                    j++;
-                }
-                if (j>0) {
-                    player.moveUp(5);
-                    j--;
-                }
-            }
-            if (time<10) {
+            if (time<180) {
                 if (player.playerRect().intersects(enemy.playerRect()) ) {
                     if (player.getyCoord()<=enemy.getyCoord()-220) {
                         enemy.takeDmg();
@@ -89,16 +76,26 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
                 }
                 if (e<0) {
                     enemy.moveLeft();
+                    enemy.faceLeft();
                 } else {
                     enemy.moveRight();
+                    enemy.faceRight();
                 }
-                if (enemy.getxCoord()==500) {
+                if (enemy.getxCoord()==0) {
                     e=0;
+                    enemy.turn();
+                }
+                if (enemy.getxCoord()==880) {
+                    e=-1;
+                    enemy.turn();
                 }
             }
             Color m = new Color(51, 51, 255);
             g.setColor(m);
             g.fillRect(860, 40, 155, 45);
+            Color o=new Color(250, 175, 0);
+            g.setColor(o);
+            g.fillRect(250, 270, 600, 6);
             g.setColor(Color.red);
             g.setFont(new Font("Concert One", Font.BOLD, 25));
             g.drawString("RESTART", 880, 74);
@@ -140,12 +137,6 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
                 player.faceRight();
                 player.moveRight();
             }
-
-            // player moves up (W)
-            if (pressedKeys[87]) {
-
-            }
-
             // player moves down (S)
             if (pressedKeys[83]) {
                 player.moveDown();
@@ -178,8 +169,9 @@ public class GraphicsPanel extends JPanel implements KeyListener, MouseListener,
             c++;
         }
         if (key==87) {
-            jump=true;
-            j=0;
+            while (player.getyCoord()!=50) {
+                player.moveUp(1);
+            }
         }
         pressedKeys[key] = false;
     }
